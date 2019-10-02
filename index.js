@@ -37,4 +37,4 @@ app.get("/", (req, res) => {
 require("./routes/authRoutes")(app);
 
 const PORT = 5000;
-app.listen(process.env.PORT || PORT);
+app.listen(process.env.PORT || 3000);
