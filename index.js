@@ -31,7 +31,7 @@ app.use(passport.session());
 
 app.get("/", (req, res) => {
     console.log("Testing app");
-    res.send("Hello Testing Connected");
+    res.send("Testing Connected");
 });
 
 require("./routes/authRoutes")(app);
