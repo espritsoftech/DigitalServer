@@ -1,6 +1,6 @@
 module.exports = { 
     apps: [{
-      name    : "DigitalServer",
+      name    : "node-app",
       script  : "npm",
       args    : "start"
     }]
