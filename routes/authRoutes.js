@@ -13,7 +13,7 @@ module.exports = app => {
         passport.authenticate("google"),
         (req, res) => {
             console.log("Logged In");
-            res.send(req);
+            res.send(req.user);
         }
     );
 
