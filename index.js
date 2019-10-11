@@ -38,7 +38,7 @@ require("./services/passport");
 
 app.get("/", (req, res) => {
     console.log("Testing app");
-    res.send("Testing Connected new");
+    res.send("Testing Connected new repo");
 });
 
 
