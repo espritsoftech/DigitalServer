@@ -43,4 +43,5 @@ app.get("/", (req, res) => {
 
 
 const PORT = 3000;
-app.listen(process.env.PORT || PORT);
+// app.listen(process.env.PORT || PORT);
+app.listen(3000);
