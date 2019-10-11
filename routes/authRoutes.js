@@ -1,34 +1,37 @@
+const mongoose = require("mongoose");
+const User = mongoose.model("User");
 const passport = require("passport");
+const LocalStrategy = require('passport-local');
 
 module.exports = app => {
-    app.get(
-        "/auth/google",
-        passport.authenticate("google", {
-            scope: ["profile", "email"]
-        })
-    );
+	app.post("/register", function(req, res) {
+		var newUser = new User({
+			name: req.body.name,
+			email: req.body.email,
+			password: req.body.password
+		});
 
-    app.get(
-        "/auth/google/callback",
-        passport.authenticate("google"),
-        (req, res) => {
-            console.log("Logged In");
-            res.send(req.user);
-        }
-    );
+		User.createUser(newUser, function(err, user) {
+			if (err) throw err;
+			res.send(user).end();
+		});
+	});
 
-    app.get(
-        "/auth/logout",
-        (req, res) => {
-            req.logout();
-            console.log("Logged Out");
-        }
-    );
+	// Endpoint to login
+	app.post("/login", passport.authenticate("local"), function(req, res) {
+		res.send(req.user);
+	});
 
-    app.get(
-        "/auth/current_user",
-        (req, res) => {
-            console.log("User", req.user);
-        }
-    )
-}
+	
+	// Endpoint to get current user
+	app.get("/user", function(req, res) {
+		console.log("User",req.user)
+		res.send(req.user);
+	});
+
+	// Endpoint to logout
+	app.get("/logout", function(req, res) {
+		req.logout();
+		res.send(null);
+	});
+};

@@ -1,12 +1,14 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const cookieSession = require("cookie-session");
-const passport = require("passport");
 const bodyParser = require("body-parser");
+var cookieParser = require('cookie-parser');
+var session = require('express-session');
+const mongoose = require("mongoose");
+const passport = require("passport");
 const cors = require("cors");
 const keys = require("./config/keys");
-require("./models/Users");
-require("./services/passport");
+require('./models/user')
+
+
 
 mongoose.connect(keys.mongoURI, {
     useNewUrlParser: true
@@ -20,21 +22,25 @@ const app = express();
 app.use(cors());
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
 
-app.use(cookieSession({
-    maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
-}));
+app.use(session({
+    secret: 'secret',
+    saveUninitialized: true,
+    resave: true
+  }));
 
 app.use(passport.initialize());
 app.use(passport.session());
+require("./routes/authRoutes")(app);
+require("./services/passport");
 
 app.get("/", (req, res) => {
     console.log("Testing app");
     res.send("Testing Connected");
 });
 
-require("./routes/authRoutes")(app);
 
-const PORT = 5000;
-app.listen(process.env.PORT || 3000);
+const PORT = 3000;
+app.listen(process.env.PORT || PORT);
