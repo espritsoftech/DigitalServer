@@ -29,6 +29,9 @@ module.exports = app => {
 		res.send(req.user);
 	});
 
+	app.get("/test", (req, res) => {
+		res.send("Testing ");
+	});
 	// Endpoint to logout
 	app.get("/logout", function(req, res) {
 		req.logout();
